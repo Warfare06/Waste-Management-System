@@ -6,6 +6,7 @@ let bins = [20, 50, 80, 30];
 function selectStreet(street) {
     document.getElementById("streetTitle").innerText = "Street " + street;
     updateBins();
+    
 }
 
 function updateBins() {
