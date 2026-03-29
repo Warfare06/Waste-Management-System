@@ -1,91 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Street Waste Monitoring</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css">
+
+    <!-- Leaflet Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 </head>
 <body>
 
-    
-    <h1>SMART STREET WASTE MONITORING</h1>
+<h1>SMART STREET WASTE MONITORING</h1>
 
-    <div class="streets">
-        <button onclick="loadStreetData(1)">Street 1</button>
-        <button onclick="loadStreetData(2)">Street 2</button>
-        <button onclick="loadStreetData(3)">Street 3</button>
-        <button onclick="loadStreetData(4)">Street 4</button>
+<div class="streets">
+    <button onclick="selectStreet(1)">Street 1</button>
+    <button onclick="selectStreet(2)">Street 2</button>
+    <button onclick="selectStreet(3)">Street 3</button>
+    <button onclick="selectStreet(4)">Street 4</button>
+</div>
+
+<h2 id="streetTitle">Street 1</h2>
+
+<!-- BINS -->
+<div class="bins-container">
+
+    <div class="bin-card red">
+        <h3>Bin 1</h3>
+        <div class="bin"><div class="fill" id="fill1"></div></div>
+        <p id="level1">0%</p>
     </div>
 
-    <h2 id="streetTitle">STREET 1</h2>
-
-    <div class="bins-container" id="binsContainer">
-        <div class="bin-card">
-            <div class="bin"><div class="fill" id="fill1" style="height: 20%; background: #2ecc71;"></div></div>
-            <p>Level: <span id="level1">20%</span></p>
-            <p>Type: <span id="type1">wet</span></p>
-            <p>Status: <span id="status1">Normal</span></p>
-        </div>
-        <div class="bin-card">
-            <div class="bin"><div class="fill blink-animation" id="fill2" style="height: 85%; background: #ff4d4d;"></div></div>
-            <p>Level: <span id="level2">85%</span></p>
-            <p>Type: <span id="type2">wet</span></p>
-            <p>Status: <span id="status2">FULL</span></p>
-        </div>
-        <div class="bin-card">
-            <div class="bin"><div class="fill" id="fill3" style="height: 50%; background: #f59e0b;"></div></div>
-            <p>Level: <span id="level3">50%</span></p>
-            <p>Type: <span id="type3">dry</span></p>
-            <p>Status: <span id="status3">Normal</span></p>
-        </div>
-        <div class="bin-card">
-            <div class="bin"><div class="fill" id="fill4" style="height: 30%; background: #2ecc71;"></div></div>
-            <p>Level: <span id="level4">30%</span></p>
-            <p>Type: <span id="type4">wet</span></p>
-            <p>Status: <span id="status4">Normal</span></p>
-        </div>
+    <div class="bin-card green">
+        <h3>Bin 2</h3>
+        <div class="bin"><div class="fill" id="fill2"></div></div>
+        <p id="level2">0%</p>
     </div>
 
-    <h2>Daily Waste Graph</h2>
-    <div class="graph-container">
-        <canvas id="wasteChart"></canvas>
+    <div class="bin-card blue">
+        <h3>Bin 3</h3>
+        <div class="bin"><div class="fill" id="fill3"></div></div>
+        <p id="level3">0%</p>
     </div>
 
-    <h2>Garbage Truck Route</h2>
-    <div id="map"></div>
-
-    <h2>AI Predictive Analytics (7-Day Forecast)</h2>
-    <div class="forecast-container" id="aiForecast"></div>
-
-    <h2>Statistics Dashboard</h2>
-    <div class="dashboard">
-        <div class="card prediction">
-            <h3>📈 Prediction</h3>
-            <p id="prediction">0%</p>
-        </div>
-        <div class="card avg">
-            <h3>% Average Level</h3>
-            <p id="avgLevel">0%</p>
-        </div>
-        <div class="card full">
-            <h3>⚠️ Full Bins</h3>
-            <p id="fullBins">0</p>
-        </div>
-        <div class="card dry">
-            <h3>♻️ Dry Waste</h3>
-            <p id="dryBins">0</p>
-        </div>
-        <div class="card wet">
-            <h3>🍃 Wet Waste</h3>
-            <p id="wetBins">0</p>
-        </div>
+    <div class="bin-card yellow">
+        <h3>Bin 4</h3>
+        <div class="bin"><div class="fill" id="fill4"></div></div>
+        <p id="level4">0%</p>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="script.js"></script>
+</div>
+
+<!-- GRAPH -->
+<h2>Street Load History</h2>
+<canvas id="wasteChart"></canvas>
+
+<!-- DASHBOARD -->
+<div class="dashboard">
+    <div class="card prediction">
+        Prediction
+        <p id="prediction">0%</p>
+    </div>
+
+    <div class="card avg">
+        Average Load
+        <p id="avg">0%</p>
+    </div>
+
+    <div class="card full">
+        Full Bins
+        <p id="full">0</p>
+    </div>
+</div>
+
+<!-- MAP -->
+<h2>Garbage Truck Route</h2>
+<div id="map"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>
