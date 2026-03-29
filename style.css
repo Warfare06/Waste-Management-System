@@ -1,11 +1,17 @@
 /* =========================================
-   1. CORE VARIABLES & BASE THEME
+   1. CORE VARIABLES (SITH THEME)
    ========================================= */
 :root {
-    --bg-dark: #0d131a; /* Deep Cybernetic Slate */
-    --card-bg: rgba(255, 255, 255, 0.02); /* Very faint glass background */
+    --primary: #ff0000; 
+    --danger: #ff4d4d;
+    --success: #2ecc71; 
+    --bg-dark: #000000; /* Pitch Black */
+    --card-bg: rgba(20, 0, 0, 0.7); /* Glassy dark red/black */
 }
 
+/* =========================================
+   2. FLOATING RED NEON ORBS BACKGROUND
+   ========================================= */
 body {
     margin: 0;
     font-family: 'Inter', sans-serif;
@@ -13,8 +19,49 @@ body {
     background-color: var(--bg-dark); 
     min-height: 100vh;
     overflow-x: hidden;
+    position: relative; 
+    z-index: 0;
 }
 
+body::before {
+    content: '';
+    position: fixed; 
+    top: -150px;
+    left: -150px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.15), transparent 60%);
+    border-radius: 50%;
+    animation: driftBlue 15s infinite alternate ease-in-out;
+    z-index: -1; 
+}
+
+body::after {
+    content: '';
+    position: fixed; 
+    bottom: -150px;
+    right: -150px;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(139, 0, 0, 0.2), transparent 60%);
+    border-radius: 50%;
+    animation: driftPurple 20s infinite alternate ease-in-out;
+    z-index: -1;
+}
+
+@keyframes driftBlue {
+    0% { transform: translate(0px, 0px) scale(1); }
+    100% { transform: translate(30vw, 20vh) scale(1.3); }
+}
+
+@keyframes driftPurple {
+    0% { transform: translate(0px, 0px) scale(1); }
+    100% { transform: translate(-30vw, -20vh) scale(1.2); }
+}
+
+/* =========================================
+   3. PERFECT CENTERING & TYPOGRAPHY
+   ========================================= */
 h1, h2 {
     text-align: center;
     width: 100%;
@@ -26,29 +73,27 @@ h1, h2 {
 h1 {
     margin-top: 30px;
     font-size: 2.5rem;
-    color: #ff3333; /* Bright Red Text */
-    text-shadow: 0 0 15px rgba(255, 51, 51, 0.6);
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    background: linear-gradient(to right, #ff4d4d, #8b0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     animation: fadeInDown 1s ease forwards;
 }
 
 h2 {
     color: #e2e8f0;
     letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 25px;
 }
 
 #streetTitle {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #ffffff;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 /* =========================================
-   2. STREET SELECTION BUTTONS
+   4. ANIMATED RED GLOWING BUTTONS
    ========================================= */
 .streets {
     display: flex;
@@ -59,25 +104,37 @@ h2 {
 }
 
 .streets button {
-    background: rgba(0, 187, 255, 0.05); 
-    border: 1px solid rgba(0, 187, 255, 0.4);
-    color: #00bbff;
-    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.05); 
+    border: 1px solid rgba(255, 0, 0, 0.3);
+    color: white;
+    padding: 12px 25px;
     font-size: 1rem;
     font-weight: bold;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.streets button::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.4), transparent);
+    transition: left 0.5s ease;
+    z-index: -1;
 }
 
 .streets button:hover {
-    background: rgba(0, 187, 255, 0.2);
-    box-shadow: 0 0 15px rgba(0, 187, 255, 0.5);
-    transform: translateY(-2px);
+    transform: scale(1.05); 
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); 
 }
+.streets button:hover::before { left: 100%; }
 
 /* =========================================
-   3. CYBER-GLASS DUSTBINS (5 Bins)
+   5. ORIGINAL CLEAN DUSTBIN CARDS
    ========================================= */
 .bins-container {
     display: flex;
@@ -86,7 +143,7 @@ h2 {
     gap: 20px;
     flex-wrap: wrap;
     margin: 30px auto 40px auto;
-    width: 95%;
+    width: 90%;
     animation: fadeInUp 1s ease forwards;
     opacity: 0;
     animation-delay: 0.2s; 
@@ -94,56 +151,46 @@ h2 {
 
 .bin-card {
     background: var(--card-bg);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 10px;
-    padding: 15px;
+    padding: 20px;
+    border-radius: 15px;
     width: 150px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 0, 0, 0.15); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .bin-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-10px); 
+    box-shadow: 0 15px 25px rgba(255, 0, 0, 0.3); 
+    border-color: rgba(255, 0, 0, 0.6); 
 }
 
-.bin-glass {
-    width: 90px;
-    height: 130px;
+.bin {
+    width: 60px;
+    height: 100px;
+    border: 3px solid #cbd5e1;
     margin: 15px auto;
     position: relative;
-    /* Makes it look like a real bin: wide top, narrow bottom */
-    clip-path: polygon(5% 0, 95% 0, 85% 100%, 15% 100%);
-    border: 2px solid rgba(255,255,255,0.2);
-    background: rgba(255, 255, 255, 0.05); /* Frosty glass effect */
-    box-shadow: inset 0 0 20px rgba(255,255,255,0.05);
+    border-radius: 0 0 8px 8px;
+    background: #000;
+    overflow: hidden;
 }
 
-.bin-glass .fill {
+.fill {
     position: absolute;
     bottom: 0;
     width: 100%;
-    transition: height 0.8s ease-in-out;
+    transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Neon Glow Classes */
-.glow-red .fill { background: #ff0055; box-shadow: 0 0 40px #ff0055, inset 0 0 15px rgba(255,255,255,0.8); }
-.glow-red { border-color: rgba(255, 0, 85, 0.4); box-shadow: 0 0 20px rgba(255, 0, 85, 0.1); }
-.glow-red .bin-percent { color: #ff0055; text-shadow: 0 0 10px #ff0055; font-size: 1.8rem; font-weight: bold; }
-
-.glow-green .fill { background: #33ff00; box-shadow: 0 0 40px #33ff00, inset 0 0 15px rgba(255,255,255,0.8); }
-.glow-green { border-color: rgba(51, 255, 0, 0.4); box-shadow: 0 0 20px rgba(51, 255, 0, 0.1); }
-.glow-green .bin-percent { color: #33ff00; text-shadow: 0 0 10px #33ff00; font-size: 1.8rem; font-weight: bold; }
-
-.glow-blue .fill { background: #00bbff; box-shadow: 0 0 40px #00bbff, inset 0 0 15px rgba(255,255,255,0.8); }
-.glow-blue { border-color: rgba(0, 187, 255, 0.4); box-shadow: 0 0 20px rgba(0, 187, 255, 0.1); }
-.glow-blue .bin-percent { color: #00bbff; text-shadow: 0 0 10px #00bbff; font-size: 1.8rem; font-weight: bold; }
-
-.glow-empty .fill { background: transparent; }
-.glow-empty { border-color: rgba(255, 255, 255, 0.2); }
-.glow-empty .bin-percent { color: #ff5555; text-shadow: 0 0 10px #ff5555; font-size: 1.8rem; font-weight: bold; }
+.blink-animation { animation: blink-red 1s infinite; }
+@keyframes blink-red {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
 
 /* =========================================
-   4. HOLLOW NEON DASHBOARD CARDS
+   6. VIBRANT STATISTICS DASHBOARD
    ========================================= */
 .dashboard {
     display: flex;
@@ -154,57 +201,50 @@ h2 {
     width: 90%;
     animation: fadeInUp 1s ease forwards;
     opacity: 0;
-    animation-delay: 0.4s;
+    animation-delay: 0.8s;
 }
 
 .card {
-    background: transparent !important; 
-    border-width: 2px;
-    border-style: solid;
     padding: 15px;
     border-radius: 12px;
     text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     transition: transform 0.2s;
     min-width: 150px;
 }
 
 .card:hover { transform: scale(1.05); }
-.card h3 { color: white; margin-bottom: 10px; font-size: 1.1rem; }
-.card p { font-size: 1.8rem; margin: 10px 0 0; font-weight: bold; }
+.card h3 { margin-bottom: 10px; font-size: 1.1rem; }
+.card p { font-size: 1.5rem; margin: 10px 0 0; font-weight: bold; }
 
-/* Glowing Borders & Text */
-.prediction { border-color: #ff00ff; box-shadow: inset 0 0 15px rgba(255,0,255,0.2), 0 0 15px rgba(255,0,255,0.2); }
-.prediction p { color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
+.prediction { background: linear-gradient(135deg, #6366f1, #a5b4fc); box-shadow: 0 0 15px rgba(99, 102, 241, 0.4); color: white; }
+.avg { background: linear-gradient(135deg, #10b981, #6ee7b7); box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); color: white; }
+.full { background: linear-gradient(135deg, #ef4444, #fca5a5); box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); color: white; }
+.dry { background: linear-gradient(135deg, #f59e0b, #fde68a); box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); color: black; }
+.wet { background: linear-gradient(135deg, #3b82f6, #93c5fd); box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); color: white; }
 
-.avg { border-color: #33ff00; box-shadow: inset 0 0 15px rgba(51,255,0,0.2), 0 0 15px rgba(51,255,0,0.2); }
-.avg p { color: #33ff00; text-shadow: 0 0 10px #33ff00; }
-
-.full { border-color: #ff3333; box-shadow: inset 0 0 15px rgba(255,51,51,0.2), 0 0 15px rgba(255,51,51,0.2); }
-.full p { color: #ff3333; text-shadow: 0 0 10px #ff3333; }
-
-.dry { border-color: #ffaa00; box-shadow: inset 0 0 15px rgba(255,170,0,0.2), 0 0 15px rgba(255,170,0,0.2); }
-.dry p { color: #ffaa00; text-shadow: 0 0 10px #ffaa00; }
-
-.wet { border-color: #00bbff; box-shadow: inset 0 0 15px rgba(0,187,255,0.2), 0 0 15px rgba(0,187,255,0.2); }
-.wet p { color: #00bbff; text-shadow: 0 0 10px #00bbff; }
+.prediction:hover { box-shadow: 0 0 25px rgba(99, 102, 241, 0.9); }
+.avg:hover { box-shadow: 0 0 25px rgba(16, 185, 129, 0.9); }
+.full:hover { box-shadow: 0 0 25px rgba(239, 68, 68, 0.9); }
+.dry:hover { box-shadow: 0 0 25px rgba(245, 158, 11, 0.9); }
+.wet:hover { box-shadow: 0 0 25px rgba(59, 130, 246, 0.9); }
 
 /* =========================================
-   5. MAP & GRAPH CHARTS
+   7. MAP & GRAPH CHARTS
    ========================================= */
 .graph-container {
     position: relative; 
     width: 80%;
-    height: 350px; 
+    height: 400px; 
     margin: 0 auto 40px auto; 
     display: block;
-    background: transparent;
-    border: 2px solid rgba(255, 51, 51, 0.4); /* Red border to match theme */
-    box-shadow: 0 0 20px rgba(255, 51, 51, 0.1);
+    background: var(--card-bg);
     padding: 20px;
     border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
     animation: fadeInUp 1s ease forwards;
     opacity: 0;
-    animation-delay: 0.6s;
+    animation-delay: 0.4s;
 }
 
 #wasteChart {
@@ -213,22 +253,21 @@ h2 {
 }
 
 #map {
-    height: 400px;
-    width: 80%;
+    height: 450px;
+    width: 90%;
     margin: 20px auto 40px auto;
     border-radius: 15px;
-    border: 2px solid rgba(0, 187, 255, 0.4); /* Blue border for map */
-    box-shadow: 0 0 20px rgba(0, 187, 255, 0.1);
+    border: 2px solid var(--primary); 
     z-index: 1;
     animation: fadeInUp 1s ease forwards;
     opacity: 0;
-    animation-delay: 0.8s;
+    animation-delay: 0.6s;
 }
 
-.leaflet-container { background: #0d131a !important; }
+.leaflet-container { background: #111 !important; }
 
 /* =========================================
-   6. AI FORECAST CARDS
+   8. AI FORECAST CARDS
    ========================================= */
 .forecast-container {
     display: flex;
@@ -239,41 +278,46 @@ h2 {
     flex-wrap: wrap; 
     animation: fadeInUp 1s ease forwards;
     opacity: 0;
-    animation-delay: 1s;
+    animation-delay: 0.8s;
 }
 
 .forecast-card {
-    background: transparent;
+    background: var(--card-bg);
     padding: 15px;
     border-radius: 12px;
     text-align: center;
     min-width: 100px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .forecast-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(255, 0, 255, 0.3);
-    border-color: #ff00ff;
+    box-shadow: 0 10px 20px rgba(255, 0, 0, 0.4);
+    border-color: rgba(255, 0, 0, 0.8);
 }
 
-.forecast-day { font-weight: bold; color: #aaaaaa; text-transform: uppercase; }
-.forecast-value { font-size: 1.5rem; font-weight: bold; margin: 10px 0; color: white; }
-.forecast-status { font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
+.forecast-day {
+    font-weight: bold;
+    color: #ff4d4d; 
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
 
-.status-high { color: #ff3333; } 
-.status-med { color: #ffaa00; }  
-.status-low { color: #33ff00; }  
+.forecast-value { font-size: 1.5rem; font-weight: bold; margin: 10px 0; }
+.forecast-status { font-size: 0.8rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+
+.status-high { color: #ff0000; } 
+.status-med { color: #f59e0b; }  
+.status-low { color: #2ecc71; }  
 
 /* =========================================
-   7. ANIMATIONS
+   9. LOAD-IN ANIMATIONS
    ========================================= */
 @keyframes fadeInUp {
     from { transform: translateY(30px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
-
 @keyframes fadeInDown {
     from { transform: translateY(-30px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
